@@ -12,13 +12,17 @@ class Program
         job1._endYear = 2002;
 
         Job job2 = new Job();
-        job2._jobTitle = "Software Engineer";
+        job2._jobTitle = "Software Developer";
         job2._company = "Apple";
-        job2._startYear = 2000;
-        job2._endYear = 2002;
+        job2._startYear = 2002;
+        job2._endYear = 2004;
 
-        Console.WriteLine(job1._company + "-" + job2._company);
+        Resume myResume = new Resume();
+        myResume._namePerson = "Steven Mondragon";
+        myResume._jobs.Add(job1);
+        myResume._jobs.Add(job2);
 
+        myResume.DisplayList();
 
 
 
