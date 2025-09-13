@@ -6,8 +6,10 @@ using System.Security.Cryptography.X509Certificates;
 public class Journal
 {
 
+
+
     /*------------------PUBLIC VARIABLES-----------*/
-    public List<Entry> _entries = new List<Entry>();
+    public static List<Entry> _entries = new List<Entry>();
 
 
     /*-------FUNCTIONS----*/
@@ -27,42 +29,54 @@ public class Journal
         }
 
         string filePath = Path.Combine(folderPath, "myJournal.csv");
-        
+
         /*---------------------------------------------------------------*/
-
         Console.WriteLine("Welcome to the Journal Program.");
-        Console.WriteLine("Please select one of the following choices:");
-        Console.WriteLine("1. Write");
-        Console.WriteLine("2. Display");
-        Console.WriteLine("3. Load");
-        Console.WriteLine("4. Save");
-        Console.WriteLine("5. Quit");
-        Console.Write("What would you like to do? ");
-        int choice  =  int.Parse(Console.ReadLine());
-
-        /*---------------------------------------------------------------------*/
-
-        /*---------------------IF CONDITIONAL------------------------------------*/
-
-        if (choice == 1)
+        bool running = true;
+        while (running)
         {
-            Console.WriteLine("Seleccionaste la Opción 1");
-        }
-        else if (choice == 2)
-        {
-            Console.WriteLine("Seleccionaste la Opción 2");
-        }
-        else if (choice == 3)
-        {
-            
-            
-            Console.WriteLine("Input the name of the file:");
-            string archivo = Console.ReadLine();
+            Console.WriteLine("Please select one of the following choices:");
+            Console.WriteLine("1. Write");
+            Console.WriteLine("2. Display");
+            Console.WriteLine("3. Load");
+            Console.WriteLine("4. Save");
+            Console.WriteLine("5. Quit");
+            Console.Write("What would you like to do? ");
+            int _choice = int.Parse(Console.ReadLine());
 
-            if (!File.Exists(archivo))
+            /*---------------------------------------------------------------------*/
+
+            /*---------------------IF CONDITIONAL------------------------------------*/
+
+
+            if (_choice == 1)
             {
-                Console.WriteLine("File not exist.");
-                return;
+
+                DateTime theCurrentTime = DateTime.Now;
+                string _dateText = theCurrentTime.ToShortDateString();
+
+                PromptGenerator generator = new PromptGenerator();
+                string _prompt = generator.GetRandomPrompt();
+                Console.Write($"{_prompt} ");
+                string _userEntry = Console.ReadLine();
+
+                Entry _entry = new Entry();
+                _entry._promptText = _prompt;
+                _entry._entryText = _userEntry;
+                _entry._date = _dateText;
+                _entry.Display();
+
+                _entries.Add(_entry);
+
+
+            }
+
+            else if (_choice == 2)
+            {
+                foreach (Entry entry in _entries)
+                {
+                    entry.Display();
+                }
             }
 
 
@@ -70,48 +84,78 @@ public class Journal
 
 
 
+
+
+            else if (_choice == 3)
+            {
+
+                Console.Write("Input the name of the file please: ");
+                string fileName = Console.ReadLine();
+                string fileJournal = Path.Combine(folderPath, fileName);
+
+
+                if (!File.Exists(fileJournal))
+                {
+                    Console.WriteLine("The fileJournal not exist.");
+                    return;
+                }
+
+                string[] lines = File.ReadAllLines(fileJournal);
+                _entries.Clear();
+                foreach (var line in lines)
+                {
+                    var dates = line.Split(',');
+                    if (dates.Length < 3) continue;
+                    Entry entry = new Entry();
+                    entry._date = dates[0];
+                    entry._promptText = dates[1];
+                    entry._entryText = dates[2];
+                    _entries.Add(entry);
+                }
+                Console.WriteLine("File succesfully load");
+
+            }
+            else if (_choice == 4)
+            {
+                List<string> finalLines = new List<string>();
+
+                if (File.Exists(filePath))
+                {
+                    string[] lines = File.ReadAllLines(filePath);
+                    foreach (var line in lines)
+                    {
+                        finalLines.Add(line);
+                    }
+                }
+
+                foreach (var entry in _entries)
+                {
+                    string newLine = $"{entry._date},{entry._promptText},{entry._entryText}";
+
+                    if (!finalLines.Contains(newLine))
+                    {
+                        finalLines.Add(newLine);
+                    }
+                }
+
+                File.WriteAllLines(filePath, finalLines);
+
+                Console.WriteLine("Entries saved in myJournal.csv.");
+
+            }
+            else if (_choice == 5)
+            {
+                Console.WriteLine("Leaving.....");
+                running = false; // Rompe el bucle            
+            }
+
+
+            else
+            {
+                Console.WriteLine("CHOOSE AN OPTION BETWEEN 1 TO 5");
+            }
         }
-        else if (choice == 4)
-        {
-            Console.WriteLine("Seleccionaste la Opción 4");
-        }
-        else if (choice == 5)
-        {
-            Console.WriteLine("Seleccionaste la Opción 5");
-        }
-        else
-        {
-            Console.WriteLine("Opción no válida. Por favor, ingresa un número entre 1 y 5.");
-        }
-
-        /*--------------------------------------------------------------------------------------*/
-
-
-
-        /*------------------------ CREATE THE CSV FILE------------------------------------*/
-        /*string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "MY JOURNAL");
-        if (!Directory.Exists(folderPath))
-        {
-            Console.WriteLine("Folder MY JOURNAL not exist. Creating the folder...");
-            Directory.CreateDirectory(folderPath);
-        }
-
-        string filePath = Path.Combine(folderPath, "myJournal.csv");*/
-
-        using (StreamWriter writer = new StreamWriter(filePath, append: true))
-        {
-            writer.WriteLine("ID,Name,Age");
-            writer.WriteLine("1,John Doe,29");
-            writer.WriteLine("2,Jane Smith,34");
-            writer.WriteLine("3,Bob Johnson,25");
-        }
-
-        Console.WriteLine($"MY JOURNAL IS CREATING IN: {filePath}");
-
-        /* ----------------------------------------------------------------------------*/
-
-
-
 
     }
+    
 }
