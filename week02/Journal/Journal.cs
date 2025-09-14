@@ -7,7 +7,6 @@ public class Journal
 {
 
 
-
     /*------------------PUBLIC VARIABLES-----------*/
     public static List<Entry> _entries = new List<Entry>();
 
@@ -80,12 +79,6 @@ public class Journal
             }
 
 
-
-
-
-
-
-
             else if (_choice == 3)
             {
 
@@ -146,7 +139,7 @@ public class Journal
             else if (_choice == 5)
             {
                 Console.WriteLine("Leaving.....");
-                running = false; // Rompe el bucle            
+                running = false;         
             }
 
 
