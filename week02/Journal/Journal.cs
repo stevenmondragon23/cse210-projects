@@ -3,6 +3,17 @@ using System.IO;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 
+/*
+
+AUTHOR: STEVEN MONDRAGON
+PROGRAM: CREATE A VIRTUAL JOURNAL
+
+EXCEED THE REQUIREMENTS:
+    - The program creates a CSV file to save and load the entries made by the user, making it easy to view the information in Excel. 
+*/
+
+
+
 public class Journal
 {
 
@@ -139,7 +150,7 @@ public class Journal
             else if (_choice == 5)
             {
                 Console.WriteLine("Leaving.....");
-                running = false;         
+                running = false;
             }
 
 
@@ -150,5 +161,5 @@ public class Journal
         }
 
     }
-    
+
 }
