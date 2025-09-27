@@ -2,7 +2,13 @@ using System;
 
 class Comment
 {
-    string _commenterName;
-    string _allText;
-    
+    public string _commenterName;
+    public string _allText;
+
+
+    public Comment(string author, string text)
+    {
+        _commenterName = author;
+        _allText = text;
+    }
 }
