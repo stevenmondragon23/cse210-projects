@@ -1,9 +1,8 @@
 using System;
 using System.Reflection;
 
-class Activity
+public class Activity
 {
-
     /*------------------------------------------------*/
 
     private string _name = "";
@@ -23,6 +22,8 @@ class Activity
     public void DisplayStartingMessage()
     {
         Console.WriteLine($"Welcome to the {_name}");
+        Console.WriteLine("");
+        Console.WriteLine($"{_description}");
     }
 
     public void DisplayEndingMessage()
@@ -31,8 +32,59 @@ class Activity
     }
 
 
+    /*----------------------------------------------------*/
+
+    public void ShowSpinner(int seconds)
+    {
+
+        int i = 0;
+
+        List<string> spinner = new List<string>();
+        spinner.Add("|");
+        spinner.Add("/");
+        spinner.Add("-");
+        spinner.Add("\\");
 
 
+        DateTime startime = DateTime.Now;
+        DateTime endtime = startime.AddSeconds(seconds);
+
+        while (DateTime.Now < endtime)
+        {
+            string s = spinner[i];
+            Console.Write(s);
+            Thread.Sleep(1000);
+            Console.Write("\b \b");
+
+            i++;
+
+            if (i >= spinner.Count)
+            {
+                i = 0;
+            }
+
+
+
+
+        }
+
+        
+
+
+
+
+
+
+    }
+
+
+    /*-------------------------------------*/
+
+    public void ShowCountDown(int seconds)
+    {
+
+    }
+    /*-----------------------------------------------*/
 
 
 
