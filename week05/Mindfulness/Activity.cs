@@ -17,18 +17,34 @@ public class Activity
         _description = description;
     }
 
+    /*SETTER*/
+
+
+
+
+    public void SetDuration(int duration)
+    {
+        _duration = duration;
+    }
+
     /*------------------------------------------------*/
 
     public void DisplayStartingMessage()
     {
+        Console.WriteLine("");
         Console.WriteLine($"Welcome to the {_name}");
         Console.WriteLine("");
         Console.WriteLine($"{_description}");
+        Console.WriteLine("");
+
     }
 
     public void DisplayEndingMessage()
     {
+        Console.WriteLine("");
         Console.WriteLine($"You have complete another {_duration} seconds of the {_name}");
+        Console.WriteLine("");
+
     }
 
 
@@ -63,18 +79,7 @@ public class Activity
                 i = 0;
             }
 
-
-
-
         }
-
-        
-
-
-
-
-
-
     }
 
 
@@ -82,18 +87,26 @@ public class Activity
 
     public void ShowCountDown(int seconds)
     {
-            
-        int width = seconds.ToString().Length; // calcula el ancho máximo una sola vez
+        
+    int i = 0;
+    List<int> countDown = new List<int>();
 
-        for (int i = seconds; i >= 0; i--)
-        {
-            Console.Write("\r" + i.ToString().PadLeft(width));
-            Thread.Sleep(1000);
-        }
+    for (int s = seconds; s >= 0; s--)
+    {
+        countDown.Add(s);
+    }
 
-        Console.WriteLine(); // salto final
     
+    while (i < countDown.Count)
+    {
+        Console.Write(countDown[i]); 
+        Thread.Sleep(1000);
+        Console.Write("\b \b"); 
+        i++;
+    }
+
+    Console.WriteLine(); 
+
     }
     /*-----------------------------------------------*/
-
 }
