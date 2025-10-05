@@ -24,49 +24,36 @@ public class ListingActivity : Activity
 
     public void Run()
     {
+        Console.Clear();
         DisplayStartingMessage();
-        Console.Write("How long, in seconds would you like for your session?  ");
-        int count = int.Parse(Console.ReadLine());
-        SetDuration(count);
-        Console.WriteLine("");
-        Console.WriteLine("Get Ready...");
-        ShowSpinner(5);
-        Console.WriteLine("");
+        Console.Write("How long, in seconds, would you like for your session? ");
+        int seconds = int.Parse(Console.ReadLine());
+        SetDuration(seconds);
 
-        Console.WriteLine("List as many responses you can to the following prompt:");
-        Console.WriteLine("");
-        Console.Write($"------------- ");
+
+        Console.Clear();
+        Console.WriteLine("List as many responses as you can to the following prompt:");
+        Console.Write($"---");
         GetRandomPrompt();
-        Console.WriteLine(" -------------");
-        Console.WriteLine("");
+        Console.WriteLine(" ---");
         Console.Write("You may begin in: ");
-        ShowCountDown(5);
+        ShowCountDown(5); 
 
-        int newCount = count / 5;
+        DateTime endTime = DateTime.Now.AddSeconds(seconds);
+        int count = 0;
 
-        while (newCount != _count)
+        while (DateTime.Now < endTime)
         {
             Console.Write("> ");
-            string answer = Console.ReadLine();
-
-            _count++;
-
-
+            string response = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(response))
+            {
+                count++;
+            }
         }
 
-        Console.WriteLine($"You listed {_count} items");
-
+        Console.WriteLine($"You listed {count} items!");
         DisplayEndingMessage();
-
-
-
-
-
-
-
-
-
-
 
 
     }
@@ -84,22 +71,20 @@ public class ListingActivity : Activity
 
     public List<string> GetListFromUser()
     {
-        List<string> userList = new List<string>();
-        Console.WriteLine("Escribe tus elementos (deja vacío y presiona Enter para terminar):");
+        List<string> responses = new List<string>();
+        DateTime endTime = DateTime.Now.AddSeconds(GetDuration());
 
-        while (true)
+        while (DateTime.Now < endTime)
         {
-            string input = Console.ReadLine();
-
-            if (string.IsNullOrWhiteSpace(input))
+            Console.Write("> ");
+            string response = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(response))
             {
-                break; 
+                responses.Add(response);
             }
-
-            userList.Add(input);
         }
 
-        return userList;
+        return responses;
     }
 
     /*-----------------------------------------------*/

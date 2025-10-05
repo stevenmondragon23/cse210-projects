@@ -44,15 +44,17 @@ public class ReflectingActivity : Activity
 
     public void Run()
     {
+        Console.Clear();
         DisplayStartingMessage();
-        Console.Write("How long, in seconds would you like for your session?  ");
-        int count = int.Parse(Console.ReadLine());
-        SetDuration(count);
-        Console.WriteLine("");
+
+        Console.Write("How long, in seconds, would you like for your session? ");
+        int seconds = int.Parse(Console.ReadLine());
+        SetDuration(seconds);
+
+        Console.Clear();
         Console.WriteLine("Get Ready...");
         ShowSpinner(5);
-        Console.WriteLine("");
-
+        Console.WriteLine();
         /*------------------------------------------*/
 
         Console.WriteLine("Consider the following prompt:");
@@ -69,14 +71,15 @@ public class ReflectingActivity : Activity
         Console.Write("You may begin in: ");
         ShowCountDown(5);
 
-        int newCount = count / 10;
-        while (newCount != 0)
+        Console.Clear();
+
+        DateTime endTime = DateTime.Now.AddSeconds(seconds);
+        while (DateTime.Now < endTime)
         {
-            Console.Write("> ");
-            DisplayQuestion();
-            Console.Write("");
-            ShowSpinner(10);
-            newCount--;
+            string question = GetRandomQuestion();
+            Console.Write($"> {question} ");
+            ShowSpinner(5);
+            Console.WriteLine();
 
         }
 

@@ -13,38 +13,36 @@ public class BreathingActivity : Activity
 
     public void Run()
     {
+
+        Console.Clear();
         DisplayStartingMessage();
-        Console.Write("How long, in seconds would you like for your session?  ");
-        int count = int.Parse(Console.ReadLine());
-        SetDuration(count);
-        Console.WriteLine("");
+
+        Console.Write("How long, in seconds, would you like for your session? ");
+        int seconds = int.Parse(Console.ReadLine());
+        SetDuration(seconds);
+
+        Console.Clear();
         Console.WriteLine("Get Ready...");
         ShowSpinner(5);
-        Console.WriteLine("");
+        Console.WriteLine();
 
+        Console.Write("Breathe in...");
+        ShowCountDown(2); 
+        Console.Write("Now breathe out...");
+        ShowCountDown(3); 
+        Console.WriteLine();
 
-        /*--------------------------------------------------------------------*/
+        DateTime endTime = DateTime.Now.AddSeconds(seconds);
 
-        Console.Write("Breath in...");
-        ShowCountDown(2);
-        Console.Write("Now Breathe out...");
-        ShowCountDown(3);
+            while (DateTime.Now < endTime)
+            {
+                Console.Write("Breathe in...");
+                ShowCountDown(4); // cuenta regresiva para inhalar
+                Console.Write("Now breathe out...");
+                ShowCountDown(6); // cuenta regresiva para exhalar
+                Console.WriteLine();
+            }
 
-
-        int newCount = count / 10;
-        while (newCount != 0)
-        {
-
-            Console.WriteLine("");
-            Console.Write("Breath in...");
-            ShowCountDown(4);
-            Console.Write("Now Breathe out...");
-            ShowCountDown(6);
-
-            newCount--;
-        }
-
-        
         DisplayEndingMessage();
 
     }

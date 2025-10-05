@@ -1,5 +1,7 @@
 using System;
 using System.Reflection;
+using System.Collections.Generic;
+using System.Threading;
 
 public class Activity
 {
@@ -19,8 +21,11 @@ public class Activity
 
     /*SETTER*/
 
-
-
+    public int GetDuration()
+    {
+        Console.Write("How long, in seconds, would you like for your session? ");
+        return int.Parse(Console.ReadLine());
+    }
 
     public void SetDuration(int duration)
     {
@@ -36,8 +41,6 @@ public class Activity
         Console.WriteLine("");
         Console.WriteLine($"{_description}");
         Console.WriteLine("");
-        
-
     }
 
     public void DisplayEndingMessage()
@@ -47,16 +50,13 @@ public class Activity
         ShowSpinner(5);
         Console.WriteLine("");
         Console.WriteLine($"You have complete another {_duration} seconds of the {_name}");
-        Console.WriteLine("");
-
+        ShowSpinner(5);
     }
-
 
     /*----------------------------------------------------*/
 
     public void ShowSpinner(int seconds)
     {
-
         int i = 0;
 
         List<string> spinner = new List<string>();
@@ -64,7 +64,6 @@ public class Activity
         spinner.Add("/");
         spinner.Add("-");
         spinner.Add("\\");
-
 
         DateTime startime = DateTime.Now;
         DateTime endtime = startime.AddSeconds(seconds);
@@ -82,35 +81,30 @@ public class Activity
             {
                 i = 0;
             }
-
         }
     }
-
 
     /*-------------------------------------*/
 
     public void ShowCountDown(int seconds)
     {
-        
-    int i = 0;
-    List<int> countDown = new List<int>();
+        int i = 0;
+        List<int> countDown = new List<int>();
 
-    for (int s = seconds; s >= 0; s--)
-    {
-        countDown.Add(s);
-    }
+        for (int s = seconds; s >= 0; s--)
+        {
+            countDown.Add(s);
+        }
 
-    
-    while (i < countDown.Count)
-    {
-        Console.Write(countDown[i]); 
-        Thread.Sleep(1000);
-        Console.Write("\b \b"); 
-        i++;
-    }
+        while (i < countDown.Count)
+        {
+            Console.Write(countDown[i]);
+            Thread.Sleep(1000);
+            Console.Write("\b \b");
+            i++;
+        }
 
-    Console.WriteLine(); 
-
+        Console.WriteLine();
     }
     /*-----------------------------------------------*/
 }
