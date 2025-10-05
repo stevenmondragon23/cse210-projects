@@ -15,12 +15,8 @@ public class BreathingActivity : Activity
     {
         DisplayStartingMessage();
         Console.Write("How long, in seconds would you like for your session?  ");
-
-
-
         int count = int.Parse(Console.ReadLine());
         SetDuration(count);
-
         Console.WriteLine("");
         Console.WriteLine("Get Ready...");
         ShowSpinner(5);
@@ -48,10 +44,7 @@ public class BreathingActivity : Activity
             newCount--;
         }
 
-        Console.WriteLine("");
-        Console.WriteLine("Well Done!");
-        ShowSpinner(5);
-
+        
         DisplayEndingMessage();
 
     }

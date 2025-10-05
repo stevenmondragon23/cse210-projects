@@ -36,11 +36,15 @@ public class Activity
         Console.WriteLine("");
         Console.WriteLine($"{_description}");
         Console.WriteLine("");
+        
 
     }
 
     public void DisplayEndingMessage()
     {
+        Console.WriteLine("");
+        Console.WriteLine("Well Done!");
+        ShowSpinner(5);
         Console.WriteLine("");
         Console.WriteLine($"You have complete another {_duration} seconds of the {_name}");
         Console.WriteLine("");
@@ -69,7 +73,7 @@ public class Activity
         {
             string s = spinner[i];
             Console.Write(s);
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             Console.Write("\b \b");
 
             i++;
